@@ -10,6 +10,9 @@ public class User {
     public User() {}
 
     public User(Long id, String name, String email, String cpf, String passwordHash) {
+        if (email == null || !email.contains("@")) { // Validação simples de domínio
+            throw new IllegalArgumentException("O e-mail fornecido é inválido.");
+        }
         this.id = id;
         this.name = name;
         this.email = email;
