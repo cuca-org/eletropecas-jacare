@@ -1,5 +1,6 @@
 package com.jacare.eletropecas.Part.Persistence;
 
+import com.jacare.eletropecas.Manufacturer.Persistence.ManufacturerMapper;
 import com.jacare.eletropecas.Part.Domain.Part;
 
 public class PartMapper {
@@ -12,7 +13,7 @@ public class PartMapper {
                 entity.getDescription(),
                 entity.getQuantityInStock(),
                 entity.getSupplierPrice(),
-                entity.getManufacturer()
+                ManufacturerMapper.toDomain(entity.getManufacturer())
         );
     }
 
@@ -25,7 +26,7 @@ public class PartMapper {
                 part.getDescription(),
                 part.getQuantityInStock(),
                 part.getSupplierPrice(),
-                part.getManufacturer()
+                ManufacturerMapper.toEntity(part.getManufacturer())
         );
     }
 }

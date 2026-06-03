@@ -1,6 +1,7 @@
 package com.jacare.eletropecas.Part.Persistence;
 
 import com.jacare.eletropecas.Manufacturer.Domain.Manufacturer;
+import com.jacare.eletropecas.Manufacturer.Persistence.ManufacturerEntity;
 import jakarta.persistence.*;
 
 @Entity
@@ -17,11 +18,11 @@ public class PartEntity {
 
     @ManyToOne
     @JoinColumn(name = "manufacturer_id")
-    private Manufacturer manufacturer;
+    private ManufacturerEntity manufacturer;
 
     public PartEntity() {}
 
-    public PartEntity(Long id, String description, Integer quantityInStock, Double supplierPrice, Manufacturer manufacturer) {
+    public PartEntity(Long id, String description, Integer quantityInStock, Double supplierPrice, ManufacturerEntity manufacturer) {
         this.id = id;
         this.description = description;
         this.quantityInStock = quantityInStock;
@@ -42,6 +43,6 @@ public class PartEntity {
     public Double getSupplierPrice() { return supplierPrice; }
     public void setSupplierPrice(Double supplierPrice) { this.supplierPrice = supplierPrice; }
 
-    public Manufacturer getManufacturer() { return manufacturer; }
-    public void setManufacturer(Manufacturer manufacturer) { this.manufacturer = manufacturer; }
+    public ManufacturerEntity getManufacturer() { return manufacturer; }
+    public void setManufacturer(ManufacturerEntity manufacturer) { this.manufacturer = manufacturer; }
 }

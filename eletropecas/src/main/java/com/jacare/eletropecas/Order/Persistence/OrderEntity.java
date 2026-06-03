@@ -2,7 +2,9 @@ package com.jacare.eletropecas.Order.Persistence;
 
 import com.jacare.eletropecas.Order.Domain.OrderStatus;
 import com.jacare.eletropecas.Part.Domain.Part;
+import com.jacare.eletropecas.Part.Persistence.PartEntity;
 import com.jacare.eletropecas.User.Domain.User;
+import com.jacare.eletropecas.User.Persistence.UserEntity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -23,7 +25,7 @@ public class OrderEntity {
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    private User customer;
+    private UserEntity customer;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
@@ -38,13 +40,13 @@ public class OrderEntity {
             joinColumns = @JoinColumn(name = "order_id"),
             inverseJoinColumns = @JoinColumn(name = "part_id")
     )
-    private List<Part> requiredParts = new ArrayList<>();
+    private List<PartEntity> requiredParts = new ArrayList<>();
 
     public OrderEntity() {
         this.status = OrderStatus.BUDGET_PENDING;
     }
 
-    public OrderEntity(Long id, String applianceDescription, String applianceBrand, String defectReported, User customer) {
+    public OrderEntity(Long id, String applianceDescription, String applianceBrand, String defectReported, UserEntity customer) {
         this.id = id;
         this.applianceDescription = applianceDescription;
         this.applianceBrand = applianceBrand;
@@ -70,8 +72,8 @@ public class OrderEntity {
     public String getDefeitoReported() { return defectReported; }
     public void setDefeitoReported(String defectReported) { this.defectReported = defectReported; }
 
-    public User getcustomer() { return customer; }
-    public void setcustomer(User customer) { this.customer = customer; }
+    public UserEntity getcustomer() { return customer; }
+    public void setcustomer(UserEntity customer) { this.customer = customer; }
 
     public OrderStatus getStatus() { return status; }
     public void setStatus(OrderStatus status) { this.status = status; }
@@ -85,6 +87,6 @@ public class OrderEntity {
     public Double getLaborCost() { return laborCost; }
     public void setLaborCost(Double laborCost) { this.laborCost = laborCost; }
 
-    public List<Part> getRequiredParts() { return requiredParts; }
-    public void setRequiredParts(List<Part> requiredParts) { this.requiredParts = requiredParts; }
+    public List<PartEntity> getRequiredParts() { return requiredParts; }
+    public void setRequiredParts(List<PartEntity> requiredParts) { this.requiredParts = requiredParts; }
 }
