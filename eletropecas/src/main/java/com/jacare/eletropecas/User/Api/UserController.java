@@ -1,45 +1,53 @@
 package com.jacare.eletropecas.User.Api;
 
-import com.jacare.eletropecas.User.Application.IUserService;
+import com.jacare.eletropecas.User.Api.Dto.UserResponse;
+import com.jacare.eletropecas.User.Application.UserService;
 import com.jacare.eletropecas.User.Domain.User;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/users")
 public class UserController {
-    private final IUserService userService;
 
-    public UserController(IUserService userService) {
+    private final UserService userService;
+
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
+    public ResponseEntity<UserResponse> create(@RequestBody User user) {
+        User created = userService.createUser(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(UserResponse.toResponse(created));
     }
 
     @GetMapping
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    public ResponseEntity<List<UserResponse>> getAll() {
+        List<UserResponse> responseList = userService.getAllUsers().stream()
+                .map(UserResponse::toResponse)
+                .toList();
+        return ResponseEntity.ok(responseList);
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable Long id) {
-        return userService.getUserById(id);
+    public ResponseEntity<UserResponse> getById(@PathVariable Long id) {
+        User user = userService.getUserById(id);
+        return ResponseEntity.ok(UserResponse.toResponse(user));
     }
 
     @PutMapping("/{id}")
-    public User updateUser(
-            @PathVariable Long id,
-            @RequestBody User updatedUser
-    ) {
-        return userService.updateUser(id, updatedUser);
+    public ResponseEntity<UserResponse> update(@PathVariable Long id, @RequestBody User user) {
+        User updated = userService.updateUser(id, user);
+        return ResponseEntity.ok(UserResponse.toResponse(updated));
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 }
