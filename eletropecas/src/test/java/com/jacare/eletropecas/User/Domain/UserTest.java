@@ -1,8 +1,10 @@
 package com.jacare.eletropecas.User.Domain;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 class UserTest {
 
@@ -25,4 +27,13 @@ class UserTest {
             new User(1L, "André Silva", "123", "123.456.789-00", "senha");
         });
     }
+
+
+    @Test
+@DisplayName("Deve falhar se o e-mail for nulo")
+void shouldThrowExceptionWhenEmailIsNull() {
+    assertThrows(IllegalArgumentException.class, () -> {
+        new User(1L, "André Silva", null, "123.456.789-00", "senha");
+    });
+}
 }
